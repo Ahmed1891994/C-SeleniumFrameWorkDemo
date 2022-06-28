@@ -1,23 +1,25 @@
-﻿using FrameworDemo.Constants;
-using FrameworDemo.DriverActions;
-using FrameworDemo.Factory;
+﻿using FrameworDemo.DriverActions;
+using FrameworDemo.DriverFactory;
+using FrameworDemo.Profiles;
 using FrameworDemo.Utilities;
+using FrameworDemo.Utilities.DebuggingUtility;
+using FrameworDemo.Utilities.LoggerUtility;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
-using System.IO;
 using System.Threading;
 
 namespace FrameworDemo.Base
 {
     public class TestBase
     {
-        public DriverMethods driverActions;
+        public static DriverMethods driveractions;
         public Debugging debugging = new();
-        public Logger logger = new();
+        private readonly Logger logger = new();
         protected DriverManagerFactory drivermanagerfactory = new();
         private readonly ThreadLocal<DriverManagerAbstract> drivermanager = new();
         private readonly ThreadLocal<IWebDriver> driver = new ();
+        public UserRegistrationProfile userregistrationprofile = new ();
         private Properties prop;
         private String browser;
         private String website;
@@ -37,11 +39,12 @@ namespace FrameworDemo.Base
             logger.Info("Driver is created successfully and saved it in thread");
 
             
-            driverActions = new DriverMethods(GetDriver());
+            driveractions = new DriverMethods(GetDriver());
             logger.Info("Driver action instance  is created successfully and push driver parameter to it");
 
-            driverActions.OpenURL_History(website);
+            driveractions.OpenURL_History(website);
             logger.Info("Website Opened successfully");
+
         }
 
 
@@ -63,7 +66,7 @@ namespace FrameworDemo.Base
             this.driver.Value = driver;
         }
 
-        protected IWebDriver GetDriver()
+        public IWebDriver GetDriver()
         {
             logger.Info("return driver value" + this.driver.Value);
             return this.driver.Value;

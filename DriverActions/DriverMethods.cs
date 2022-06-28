@@ -1,9 +1,8 @@
-﻿using FrameworDemo.Base;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using System;
-using NUnit.Framework;
-using FrameworDemo.Utilities;
+using OpenQA.Selenium.Support.UI;
+using FrameworDemo.Utilities.LoggerUtility;
 
 namespace FrameworDemo.DriverActions
 {
@@ -11,12 +10,15 @@ namespace FrameworDemo.DriverActions
     {
         private readonly IWebDriver driver;
         public Logger logger;
+        private WebDriverWait wait;
         public DriverMethods(IWebDriver driver)
         {
             logger = new();
             
             this.driver = driver;
             logger.Info("driver is saved in private variable successsfully" + driver);
+
+            wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(10));
         }
         // ************************************URLNavigation**********************************************
         // open url using navigate
@@ -53,30 +55,47 @@ namespace FrameworDemo.DriverActions
             logger.Info("Key (("+ Keys + ")) is pressed successfully");
         }
 
-        // ****************************************Buttons************************************************
+        // ****************************************Buttons and drop box***********************************
         // click on button
         public void ClickOn(By element)
         {
-            //wait.until(ExpectedConditions.elementToBeClickable(element));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(element));
+            logger.Info("driver is " + driver);
             driver.FindElement(element).Click();
-            //logger.Info("button ((" ")) is clicked successfully");
+            logger.Info("button (("+ element  + ")) is clicked successfully");
         }
 
+        public void ChooseByTextInDropBox(By element,String txt)
+        {
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(element));
+            SelectElement select = new(driver.FindElement(element));
+            select.SelectByText(txt);
+            logger.Info("Choose ((" + txt + ")) is selected successfully by Text from dropbox " + element);
+        }
+
+        public void ChooseByValueInDropBox(By element, String value)
+        {
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(element));
+            SelectElement select = new(driver.FindElement(element));
+            select.SelectByValue(value);
+            logger.Info("Choose ((" + value + ")) is selected successfully by value from dropbox " + element);
+        }
         // ***************************************TextFields**********************************************
         // put text in field after clearing it
         public void TextSet(By element, String text)
         {
-            //wait.until(ExpectedConditions.visibilityOfElementLocated(element));
-            driver.FindElement(element).Clear();
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(element));
+            IWebElement Elementfield = driver.FindElement(element);
+            Elementfield.Clear();
             logger.Info("Text is cleared successfully");
-            driver.FindElement(element).SendKeys(text);
+            Elementfield.SendKeys(text);
             logger.Info("Text ((" + text + ")) is written successfully");
         }
 
         // Get text from element
         public String TextGet(By element)
         {
-            //wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(element));
             String result = driver.FindElement(element).Text;
             logger.Info("Text ((" + result + ")) is returned from Element successfully");
             return result;

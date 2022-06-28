@@ -40,17 +40,45 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Bogus": {
+              "target": "Package",
+              "version": "[34.0.2, )"
+            },
+            "CountryData.Bogus": {
+              "target": "Package",
+              "version": "[3.74.0, )"
+            },
+            "DotNetSeleniumExtras.WaitHelpers": {
+              "target": "Package",
+              "version": "[3.11.0, )"
+            },
+            "ExcelDataReader": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "ExcelDataReader.DataSet": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "Faker.Net": {
+              "target": "Package",
+              "version": "[2.0.154, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.2.10, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[16.9.4, )"
+              "version": "[17.2.0, )"
             },
             "NUnit": {
               "target": "Package",
-              "version": "[3.13.1, )"
+              "version": "[3.13.3, )"
             },
             "NUnit3TestAdapter": {
               "target": "Package",
-              "version": "[3.17.0, )"
+              "version": "[4.2.1, )"
             },
             "Selenium.Support": {
               "target": "Package",
@@ -69,8 +97,10 @@
               "version": "[2.13.0, )"
             },
             "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[3.0.2, )"
+              "version": "[3.1.2, )"
             }
           },
           "imports": [
@@ -88,7 +118,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
